@@ -24,7 +24,7 @@ bool  gDisableGlow    = false;
 bool  gHideBalls      = false;
 float gGlowIntensity  = 0.5;
 float gGlowMultiplier = 1.25;
-float gGlowDuration   = 0.15;
+float gGlowDuration   = 0.2;
 
 RequestBall::RequestBall(LogEntry* le, FXFont* font, TextureResource* tex, const vec3f& colour, const vec2f& pos, const vec2f& dest, float speed) {
     this->le   = le;

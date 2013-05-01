@@ -17,7 +17,7 @@
  
 #include "paddle.h"
 
-int gPaddleMode = PADDLE_SINGLE;
+int gPaddleMode = PADDLE_VHOST;
 int gPaddleTokens = PADDLE_TOKENS_VISIBLE;
 
 Paddle::Paddle(vec2f pos, vec4f colour, std::string token, FXFont font) {
