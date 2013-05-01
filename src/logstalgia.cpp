@@ -975,7 +975,7 @@ void Logstalgia::logic(float t, float dt) {
         }
 
         //if still not moving, recentre
-        if(!paddle->moving()) {
+        if((!paddle->recentering()) && (!paddle->moving())) {
             recentre=true;
             paddle->setTarget(0);
         }

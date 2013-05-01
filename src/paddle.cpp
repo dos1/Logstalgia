@@ -32,6 +32,7 @@ Paddle::Paddle(vec2f pos, vec4f colour, std::string token, FXFont font) {
     this->height = 50;
     this->target = 0;
     this->font = font;
+    this->fading = false;
 
     dest_y = -1;
 }
@@ -46,17 +47,25 @@ void Paddle::moveTo(int y, float eta, vec4f nextcol) {
     this->dest_y = y;
     this->dest_eta = eta;
     this->dest_elapsed = 0.0f;
+    this->lastcol = this->colour;
     this->nextcol = nextcol;
+    this->fading = false;
 
     //debugLog("move to %d over %.2f\n", dest_y, dest_eta);
 }
 
 bool Paddle::visible() {
-    return colour.w > 0.01;
+    return moving() && fading;
 }
 
 bool Paddle::moving() {
-    return dest_y != -1;
+  if (fading)
+    return false;
+  return dest_y != -1;
+}
+
+bool Paddle::recentering() {
+  return fading;
 }
 
 float Paddle::getY() {
@@ -72,12 +81,16 @@ RequestBall* Paddle::getTarget() {
 }
 
 void Paddle::setTarget(RequestBall* target) {
-
+  
     if(target==0) {
       
-      moveTo(2*pos.y - start_y, 2.5, default_colour);
-        return;
+      moveTo(2*pos.y - start_y, 3, default_colour);
+      fading=true;
+      return;
     }
+    
+    start_y = pos.y;
+    
 
     this->target = target;
     
@@ -117,6 +130,7 @@ void Paddle::logic(float dt) {
             dest_y = -1;
             colour = nextcol;
             lastcol = colour;
+            fading = false;
         } else {
             float alpha = remaining/dest_eta;
             pos.y = start_y + ((dest_y-start_y)*(1.0f - alpha));

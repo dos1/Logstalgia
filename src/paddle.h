@@ -59,6 +59,8 @@ protected:
     float dest_eta;
     float dest_elapsed;
     
+    bool fading;
+    
     FXFont font;
 
 public:
@@ -66,6 +68,7 @@ public:
     ~Paddle();
     void moveTo(int y, float eta, vec4f nextcol);
     bool moving();
+    bool recentering();
     bool visible();
 
     void setTarget(RequestBall* target);
