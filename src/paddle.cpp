@@ -40,6 +40,8 @@ Paddle::~Paddle() {
 }
 
 void Paddle::moveTo(int y, float eta, vec4f nextcol) {
+    if (y<0) y=0;
+    if (y>display.height) y=display.height;
     this->start_y = (int) this->pos.y;
     this->dest_y = y;
     this->dest_eta = eta;
@@ -70,16 +72,18 @@ RequestBall* Paddle::getTarget() {
 }
 
 void Paddle::setTarget(RequestBall* target) {
-    this->target = target;
 
     if(target==0) {
-        moveTo(display.height/2, 4, default_colour);
+      
+      moveTo(2*pos.y - start_y, 2.5, default_colour);
         return;
     }
 
+    this->target = target;
+    
     vec2f dest = target->finish();
     vec4f col  = (gPaddleMode == PADDLE_VHOST || gPaddleMode == PADDLE_PID)  ?
-        vec4f(token_colour,1.0) : vec4f(target->colour, 1.0f);
+        vec4f(token_colour,1.0f) : vec4f(target->colour, 1.0f);
 
     moveTo((int)dest.y, target->arrivalTime(), col);
 }

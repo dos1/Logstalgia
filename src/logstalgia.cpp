@@ -897,7 +897,7 @@ void Logstalgia::logic(float t, float dt) {
                 float pos_offset   = 1.0 - item_offset * (float) item_no++;
                 float start_offset = std::min(1.0f, pos_offset);
 
-		addBall(le, start_offset);
+                addBall(le, start_offset);
 
                 queued_entries.pop_front();
             }
